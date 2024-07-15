@@ -29,10 +29,18 @@
 import React, { useState } from 'react'
 import Menu from './Menu';
 import { FaBars  } from 'react-icons/fa';
+import { useNavigate } from 'react-router-dom';
 
 const NavSideBar = () => {
+    const navigate = useNavigate();
     const [isDropdown, setIsDropdown] = useState(false);
     const [isDropdownProfile, setIsDropdownProfile] = useState(false);
+
+    const handleLogout = (e) => {
+        e.preventDefault();
+
+        navigate('/');
+    }
 
     const handleDropdown = () => {
         setIsDropdown(!isDropdown);
@@ -58,7 +66,7 @@ const NavSideBar = () => {
                     <div className='w-full'>
                         <ul className='flex flex-col justify-center items-center w-full bg-pink-500 text-sm text-white font-bold            '>
                             <li className='w-full hover:cursor-pointer hover:bg-pink-400'>
-                                <button className='w-full py-2'>Logout</button>
+                                <button className='w-full py-2' onClick={handleLogout}>Logout</button>
                             </li>
                         </ul>
                     </div>
@@ -92,7 +100,7 @@ const NavSideBar = () => {
             <div className='w-full'>
                 <ul className='flex flex-col justify-center items-center w-full bg-pink-500 text-md text-white font-bold            '>
                     <li className='w-full hover:cursor-pointer hover:bg-pink-400'>
-                        <button className='w-full py-2'>Logout</button>
+                        <button className='w-full py-2' onClick={handleLogout}>Logout</button>
                     </li>
                 </ul>
             </div>

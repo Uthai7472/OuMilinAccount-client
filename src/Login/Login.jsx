@@ -1,7 +1,15 @@
 import React from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 
 const Login = () => {
+    const navigate = useNavigate();
+
+    const handleLogin = (e) => {
+        e.preventDefault();
+
+        navigate('/dashboard');
+    }
+
   return (
     <div className='bg-[#FFE5EC] w-full min-h-screen flex justify-center items-center'>
         {/* Login Main */}
@@ -35,7 +43,11 @@ const Login = () => {
             </div>
             {/* Login Button */}
             <div className='flex justify-center items-center mt-6'>
-                <button className='w-[60%] h-10 bg-[#FB6F92] text-xl font-bold text-white rounded-lg hover:bg-[#FB6F9266]'>Login</button>
+                <button className='w-[60%] h-10 bg-[#FB6F92] text-xl font-bold text-white rounded-lg hover:bg-[#FB6F9266]'
+                    onClick={handleLogin}
+                >
+                    Login
+                </button>
             </div>
         </div>
     </div>
