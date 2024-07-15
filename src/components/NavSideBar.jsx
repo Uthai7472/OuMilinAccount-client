@@ -57,16 +57,16 @@ const NavSideBar = () => {
         {/* Sidebar */}
         <div className='hidden md:flex flex-col w-[12rem] min-h-screen bg-pink-600 text-white shadow-2xl'>
             {/* Sidebar Topic */}
-             <div className='w-full h-full flex justify-center items-center text-white text-xl font-bold py-3 border-white border-b-2
+             <div className='w-full h-full flex justify-center items-center text-white text-xl font-bold py-3 px-3 border-white border-b-2
                 hover:cursor-pointer
              ' onClick={handleDropdownProfile}>
-                OuMilin Account
+                OuMilin บัญชีรายรับ-รายจ่าย
              </div>
              {isDropdownProfile ? (
                     <div className='w-full'>
                         <ul className='flex flex-col justify-center items-center w-full bg-pink-500 text-sm text-white font-bold            '>
                             <li className='w-full hover:cursor-pointer hover:bg-pink-400'>
-                                <button className='w-full py-2' onClick={handleLogout}>Logout</button>
+                                <button className='w-full py-2' onClick={handleLogout}>ลงชื่อออก</button>
                             </li>
                         </ul>
                     </div>
@@ -82,10 +82,10 @@ const NavSideBar = () => {
         {/* ----------------------------------------------------- */}
 
         {/* Navbar */} 
-        <div className='md:hidden flex justify-between w-full h-16 bg-pink-600 text-white'>
+        <div className='md:hidden flex justify-between w-full h-auto bg-pink-600 text-white'>
             {/* Navbar Topic */}
             <div className='w-full h-full flex items-center text-white text-xl font-bold py-3 px-3 hover:cursor-pointer' onClick={handleDropdownProfile}>
-                OuMilin Account
+                OuMilin บัญชีรายรับ-รายจ่าย
             </div>
             <div className='flex items-center px-3'>
                 {/* Menu icon dropdown */}
@@ -100,7 +100,7 @@ const NavSideBar = () => {
             <div className='w-full'>
                 <ul className='flex flex-col justify-center items-center w-full bg-pink-500 text-md text-white font-bold            '>
                     <li className='w-full hover:cursor-pointer hover:bg-pink-400'>
-                        <button className='w-full py-2' onClick={handleLogout}>Logout</button>
+                        <button className='w-full py-2' onClick={handleLogout}>ลงชื่อออก</button>
                     </li>
                 </ul>
             </div>

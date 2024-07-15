@@ -5,9 +5,9 @@ import { MdAttachMoney, MdMoneyOff, MdAccountBalanceWallet } from 'react-icons/m
 
 const Menu = () => {
     const menuItems = [
-        {name: 'Dashboard', link: '/dashboard', logo:<FaChartLine size={20} />},
-        {name: 'Income', link: '/income', logo:<FaMoneyBillWave size={20} />},
-        {name: 'Expense', link: '/expense', logo:<MdAttachMoney size={20} />},
+        {name: 'ภาพรวม', link: '/dashboard', logo:<FaChartLine size={20} />},
+        {name: 'รายรับ', link: '/income', logo:<FaMoneyBillWave size={20} />},
+        {name: 'รายจ่าย', link: '/expense', logo:<MdAttachMoney size={20} />},
     ]
 
 

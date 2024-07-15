@@ -4,6 +4,7 @@ import Login from './Login/Login'
 import Register from './Register/Register'
 import NavSideBar from './components/NavSideBar'
 import Dashboard from './Dashboard/Dashboard'
+import Expense from './Expense/Expense'
 
 const App = () => {
   return (
@@ -12,6 +13,7 @@ const App = () => {
         <Route path='/' element={<Login />}/>
         <Route path='/register' element={<Register />}/>
         <Route path='/dashboard' element={<Dashboard />}/>
+        <Route path='/expense' element={<Expense />}/>
       </Routes>
     </Router>
   )

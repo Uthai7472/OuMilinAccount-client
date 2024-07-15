@@ -11,7 +11,7 @@ const Dashboard = () => {
             <div className='flex-1 justify-center items-center text-xl md:text-2xl font-bold bg-pink-300'>
                 {/* Topic Dashboard */}
                 <div className='flex justify-center items-center py-3 text-white'>
-                    User Dashboard
+                    ภาพรวม ของ มิลิน
                 </div>
 
                 {/* Card Dashboard */}
