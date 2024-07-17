@@ -53,11 +53,11 @@ const NavSideBar = () => {
 
 
   return (
-    <div>
+    <div className=''>
         {/* Sidebar */}
-        <div className='hidden md:flex flex-col w-[12rem] min-h-screen bg-pink-600 text-white shadow-2xl'>
+        <div className='hidden md:flex flex-col w-[12rem] h-full bg-pink-600 text-white shadow-2xl'>
             {/* Sidebar Topic */}
-             <div className='w-full h-full flex justify-center items-center text-white text-xl font-bold py-3 px-3 border-white border-b-2
+             <div className='w-full h-auto flex justify-center items-start text-white text-xl font-bold py-3 px-3 border-white border-b-2
                 hover:cursor-pointer
              ' onClick={handleDropdownProfile}>
                 OuMilin บัญชีรายรับ-รายจ่าย
@@ -82,7 +82,7 @@ const NavSideBar = () => {
         {/* ----------------------------------------------------- */}
 
         {/* Navbar */} 
-        <div className='md:hidden flex justify-between w-full h-auto bg-pink-600 text-white'>
+        <div className='md:hidden flex justify-between w-full h-[100%] bg-pink-600 text-white'>
             {/* Navbar Topic */}
             <div className='w-full h-full flex items-center text-white text-xl font-bold py-3 px-3 hover:cursor-pointer' onClick={handleDropdownProfile}>
                 OuMilin บัญชีรายรับ-รายจ่าย

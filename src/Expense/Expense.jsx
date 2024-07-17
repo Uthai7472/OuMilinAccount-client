@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import NavSideBar from '../components/NavSideBar'
 import ExpenseRecord from '../components/ExpenseRecord'
 import { FaPlus } from 'react-icons/fa';
+import ExpenseHistory from '../components/ExpenseHistory';
 
 const Expense = () => {
     const [records, setRecords] = useState([{}]);
@@ -57,7 +58,14 @@ const Expense = () => {
                     </div>
 
                 </div>
+
+                {/* Expense History */}
+                <div className='w-full h-auto mx-2 my-3 bg-pink-200 border-white border-2 rounded-lg'>
+                    <ExpenseHistory />
+                </div>
             </div>
+            
+            
         </div>
         
     </div>
