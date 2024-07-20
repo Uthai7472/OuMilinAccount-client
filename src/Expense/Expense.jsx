@@ -1,14 +1,53 @@
 import React, { useState } from 'react'
 import NavSideBar from '../components/NavSideBar'
+import moment from 'moment-timezone';
 import ExpenseRecord from '../components/ExpenseRecord'
 import { FaPlus } from 'react-icons/fa';
 import ExpenseHistory from '../components/ExpenseHistory';
+import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 
 const Expense = () => {
-    const [records, setRecords] = useState([{}]);
+    const [records, setRecords] = useState([{ detail: '', category: 'สำคัญ', price: '' }]);
+    const [date, setDate] = useState('');
+
+    const token = localStorage.getItem('token');
+    const navigate = useNavigate();
 
     const addRecord = () => {
-        setRecords([...records, {}])
+        setRecords([...records, { detail: '', category: 'สำคัญ', price: '' }])
+    }
+
+    const handleChange = (index, field, value) => {
+        const newRecords = [...records];
+        newRecords[index] = { ...newRecords[index], [field]: value};
+        setRecords(newRecords);
+    }
+
+    const handleRecord = async () => {
+        console.log('Records: ', records);
+
+        const expenses = records.map(record => ({
+            date: date,
+            detail: record.detail,
+            category: record.category,
+            price: record.price
+        }));
+
+        console.log('Expenses: ', expenses);
+
+        try {
+            const response = await axios.post('https://oumilin-account-server.onrender.com/api/expense/record', { expenses }, {
+                headers: {
+                    'Authorization': `Bearer ${token}`
+                }
+            })
+            console.log(response.data.message);
+            window.location.reload();
+
+        } catch (error) {
+            console.error('Error saving records:', error);
+        }
     }
 
   return (
@@ -33,13 +72,18 @@ const Expense = () => {
                     <div className='flex gap-2 px-2 py-2'>
                         <span>วัน/เดือน/ปี</span>
                         <span>
-                            <input type="date" className='px-2 rounded-md' />
+                            <input type="date" className='px-2 rounded-md' onChange={(e) => setDate(e.target.value)}/>
                         </span>
                     </div>
                     {/* Detail record component */}
                     <div className='block'>
                         {records.map((record, index) => (
-                            <ExpenseRecord key={index} />
+                            <ExpenseRecord 
+                                key={index}
+                                index={index}
+                                record={record}
+                                handleChange={handleChange}
+                            />
                         ))}
                     </div>
 
@@ -54,7 +98,9 @@ const Expense = () => {
                     <div className='w-full flex justify-center items-center'>
                         <button className='bg-pink-600 text-pink-200 w-full mx-2 py-2 rounded-lg hover:bg-pink-300
                             hover:text-pink-700
-                        '>บันทึกรายจ่าย</button>
+                        '
+                            onClick={handleRecord}
+                        >บันทึกรายจ่าย</button>
                     </div>
 
                 </div>
