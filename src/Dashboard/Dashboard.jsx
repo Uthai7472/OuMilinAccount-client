@@ -1,10 +1,38 @@
 import React, { useEffect, useState } from 'react'
 import NavSideBar from '../components/NavSideBar'
 import { FaDollarSign, FaMoneyBill, FaRegCalendarAlt } from 'react-icons/fa';
+import { Bar } from 'react-chartjs-2';
+import { Chart as ChartJS, Title, Tooltip, Legend, BarElement, CategoryScale, LinearScale } from 'chart.js';
+
+// Register ChartJS components
+ChartJS.register(Title, Tooltip, Legend, BarElement, CategoryScale, LinearScale);
 
 const Dashboard = ({ expenses }) => {
     const [expenseThisMonth, setExpenseThisMonth] = useState(0);
     const [expenseAll, setExpenseAll] = useState(0);
+    const [chartData, setChartData] = useState({
+        labels: [],  // Categories
+        datasets: [
+            {
+                label: '',
+                data: [],  // Values
+                backgroundColor: '',
+                borderColor: '',
+                borderWidth: 1
+            }
+        ]
+    });
+    const [selectedMonth, setSelectedMonth] = useState(new Date().getMonth()); // Default to current month
+    const [selectedYear, setSelectedYear] = useState(new Date().getFullYear()); // Default to current year
+
+    const handleMonthChange = (event) => {
+        setSelectedMonth(parseInt(event.target.value));
+        console.log(selectedMonth);
+    };
+
+    const handleYearChange = (event) => {
+        setSelectedYear(parseInt(event.target.value));
+    };
 
     useEffect(() => {
         const calculateExpenses = () => {
@@ -12,10 +40,17 @@ const Dashboard = ({ expenses }) => {
             const currentMonth = today.getMonth(); // 0-indexed month
             const currentYear = today.getFullYear();
 
-            // Filter expenses for the current month year
+            // Filter expenses for the current month year for card
             const filteredExpenses = expenses.filter(expense => {
                 const expenseDate = new Date(expense.date);
                 return expenseDate.getMonth() === currentMonth && expenseDate.getFullYear() === currentYear;
+                
+            });
+
+            // Filter expenses for the current month year for chart
+            const filteredExpensesChart = expenses.filter(expense => {
+                const expenseDate = new Date(expense.date);
+                return expenseDate.getMonth() === selectedMonth && expenseDate.getFullYear() === selectedYear;
                 
             });
 
@@ -27,10 +62,33 @@ const Dashboard = ({ expenses }) => {
 
             setExpenseThisMonth(totalThisMonth);
             setExpenseAll(totalAll);
+
+            // Calculate expenses by category for chart
+            const categoryTotals = filteredExpensesChart.reduce((acc, expense) => {
+                if (acc[expense.category]) {
+                    acc[expense.category] += parseFloat(expense.price);
+                } else {
+                    acc[expense.category] = parseFloat(expense.price);
+                }
+                return acc;
+            }, {});
+
+            setChartData({
+                labels: Object.keys(categoryTotals),
+                datasets: [
+                    {
+                        label: 'Expenses by Category',
+                        data: Object.values(categoryTotals),
+                        backgroundColor: 'rgba(255, 99, 132, 0.2)',
+                        borderColor: 'rgba(255, 99, 132, 1)',
+                        borderWidth: 1
+                    }
+                ]
+            });
         };
 
         calculateExpenses();
-    }, [expenses]);
+    }, [expenses, selectedMonth, selectedYear]);
 
   return (
     <div>
@@ -68,9 +126,56 @@ const Dashboard = ({ expenses }) => {
                 </div>
 
                 {/* Chart Dashboard */}
+                {/* Filters */}
+                <div className='flex justify-center items-center gap-4 py-2'>
+                        <select
+                            value={selectedMonth}
+                            onChange={handleMonthChange}
+                            className='p-2 rounded-md'
+                        >
+                            {Array.from({ length: 12 }, (_, i) => (
+                                <option key={i} value={i}>
+                                    {new Date(0, i).toLocaleString('default', { month: 'long' })}
+                                </option>
+                            ))}
+                        </select>
+                        <select
+                            value={selectedYear}
+                            onChange={handleYearChange}
+                            className='p-2 rounded-md'
+                        >
+                            {Array.from({ length: 5 }, (_, i) => (
+                                <option key={i} value={2020 + i}>
+                                    {2020 + i}
+                                </option>
+                            ))}
+                        </select>
+                    </div>
                 <div className='flex justify-center my-3 mx-3'>
-                    <div className='block w-[95%] h-[22rem] bg-pink-400'>
-
+                    <div className='w-[95%] h-[22rem] bg-pink-300 flex justify-center items-center rounded-[1rem]'>
+                    <Bar
+                                data={chartData}
+                                options={{
+                                    responsive: true,
+                                    plugins: {
+                                        legend: {
+                                            position: 'top',
+                                        },
+                                        title: {
+                                            display: true,
+                                            text: 'Expenses by Category',
+                                        },
+                                    },
+                                    scales: {
+                                        x: {
+                                            beginAtZero: true,
+                                        },
+                                        y: {
+                                            beginAtZero: true,
+                                        },
+                                    },
+                                }}
+                            />
                     </div>
                 </div>
 

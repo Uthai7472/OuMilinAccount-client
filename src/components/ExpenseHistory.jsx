@@ -2,6 +2,7 @@ import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import NavSideBar from '../components/NavSideBar';
 import moment from 'moment-timezone';
+import { FaWindowClose } from 'react-icons/fa';
 
 const convertToThaiDate = (dateString) => {
     const thaiMonths = [
@@ -22,6 +23,7 @@ const ExpenseHistory = ({ expenses }) => {
     const [selectedMonth, setSelectedMonth] = useState('');
     const [selectedCategory, setSelectedCategory] = useState('');
     const [filteredExpenses, setFilteredExpenses] = useState([]);
+    const [dropdownIdx, setDropdownIdx] = useState(null);
 
     const months = [
         '', 'มกราคม', 'กุมภาพันธ์', 'มีนาคม', 'เมษายน', 'พฤษภาคม', 'มิถุนายน',
@@ -63,12 +65,17 @@ const ExpenseHistory = ({ expenses }) => {
         setSelectedCategory(e.target.value);
     }
 
+    const toggleDropdown = (uniqueId) => {
+        setDropdownIdx(dropdownIdx === uniqueId ? null : uniqueId);
+    }
+
     const groupedExpenses = filteredExpenses.reduce((acc, expense) => {
         const date = expense.date.split('T')[0];
         if (!acc[date]) {
             acc[date] = [];
         }
         acc[date].push({
+            id: expense.id,
             detail: expense.detail,
             category: expense.category,
             price: expense.price
@@ -78,6 +85,24 @@ const ExpenseHistory = ({ expenses }) => {
 
     // Calculate total price
     const totalPrice = filteredExpenses.reduce((total, expense) => total + parseFloat(expense.price), 0);
+
+    const handleDelete = async (id) => {
+        console.log(id);
+        try {
+            const response = await axios.delete(`http://localhost:3000/api/expense/expense/${id}`, {
+                headers: {
+                    'Authorization': `Bearer ${token}`
+                }
+            });
+
+            console.log('Response message:', response.data.message);
+
+            window.location.reload();
+
+        } catch (error) {
+            console.error('Error deleting expense:', error);
+        }
+    }
 
     return (
         <div>
@@ -139,18 +164,45 @@ const ExpenseHistory = ({ expenses }) => {
                             </tr>
                         </thead>
                         <tbody className='w-full'>
-                            {Object.keys(groupedExpenses).map((date, index) => (
-                                <React.Fragment key={index}>
+                            {Object.keys(groupedExpenses).map((date, dateIndex) => (
+                                <React.Fragment key={dateIndex}>
                                     <tr className='flex'>
                                         <td className='w-full flex justify-center items-center font-bold bg-pink-300'>{convertToThaiDate(date)}</td>
                                     </tr>
-                                    {groupedExpenses[date].map((expense, idx) => (
-                                        <tr key={idx} className='flex w-full justify-between border-pink-700 border-t-[0.5px]'>
-                                            <td className='w-1/3 px-2 flex justify-center'>{expense.detail}</td>
-                                            <td className='w-1/3 px-2 flex justify-center'>{expense.price}</td>
-                                            <td className='w-1/3 px-2 flex justify-center'>{expense.category}</td>
-                                            
-                                        </tr>
+                                    {groupedExpenses[date].map((expense, expenseIndex) => (
+                                        <React.Fragment key={expense.id}>
+                                            <tr 
+                                                className='flex w-full justify-between border-pink-700 border-t-[0.5px]'
+                                                onClick={() => toggleDropdown(expense.id)}
+                                            >
+                                                <td className='w-1/3 px-2 flex justify-center'>{expense.detail}</td>
+                                                <td className='w-1/3 px-2 flex justify-center'>{expense.price}</td>
+                                                <td className='w-1/3 px-2 flex justify-center'>{expense.category}</td>
+                                                
+                                            </tr>
+
+                                            {dropdownIdx === expense.id && (
+                                                <tr>
+                                                    <td colSpan={3} className='flex justify-end items-center gap-3'>
+                                                        {/* <div className='bg-blue-500 text-white px-3 border-white border-2 rounded-md'
+                                                            
+                                                        >
+                                                            <button>
+                                                                Edit
+                                                            </button>
+                                                        </div> */}
+                                                        <div 
+                                                            className=''
+                                                            onClick={() => handleDelete(expense.id)}
+                                                        >
+                                                            <button className='w-full flex text-pink-700'>
+                                                                <FaWindowClose size={22} />
+                                                            </button>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                            )}
+                                    </React.Fragment>
                                     ))}
                                 </React.Fragment>
                             ))}
