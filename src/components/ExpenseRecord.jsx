@@ -25,7 +25,7 @@ const ExpenseRecord = ({ index, record, handleChange }) => {
                     รายการ
                 </div>
                 <div >
-                    <textarea name="" id="" className='rounded-lg w-full px-1' required
+                    <textarea name="" id="" className='rounded-lg w-full px-1 shadow-md shadow-pink-700' required
                         onChange={(e) => handleChange(index, 'detail', e.target.value)}
                         value={record.detail}
                     >
@@ -39,7 +39,7 @@ const ExpenseRecord = ({ index, record, handleChange }) => {
                     หมวดหมู่
                 </div>
                 <div>
-                    <select name="category" id="category" className='rounded-md w-full px-1'
+                    <select name="category" id="category" className='rounded-md w-full px-1 shadow-md shadow-pink-700'
                         onChange={(e) => handleChange(index, 'category', e.target.value)}
                         value={record.category}
                     >
@@ -55,7 +55,7 @@ const ExpenseRecord = ({ index, record, handleChange }) => {
                     ราคา
                 </div>
                 <div>
-                    <input type="number" className='rounded-md w-full px-1' required
+                    <input type="number" className='rounded-md w-full px-1 shadow-md shadow-pink-700' required
                         onChange={(e) => handleChange(index, 'price', e.target.value)}
                         value={record.price}
                     />

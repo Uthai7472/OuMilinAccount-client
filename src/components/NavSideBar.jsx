@@ -54,9 +54,9 @@ const NavSideBar = () => {
 
 
   return (
-    <div className=''>
+    <div className='shadow-2xl '>
         {/* Sidebar */}
-        <div className='hidden md:flex flex-col w-[12rem] h-full bg-pink-600 text-white shadow-2xl'>
+        <div className='hidden md:flex flex-col w-[12rem] h-full bg-pink-600 text-white shadow-xl shadow-white'>
             {/* Sidebar Topic */}
              <div className='w-full h-auto flex justify-center items-start text-white text-xl font-bold py-3 px-3 border-white border-b-2
                 hover:cursor-pointer

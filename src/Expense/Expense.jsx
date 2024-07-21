@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import NavSideBar from '../components/NavSideBar'
 import moment from 'moment-timezone';
 import ExpenseRecord from '../components/ExpenseRecord'
@@ -7,7 +7,7 @@ import ExpenseHistory from '../components/ExpenseHistory';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 
-const Expense = () => {
+const Expense = ({ expenses }) => {
     const [records, setRecords] = useState([{ detail: '', category: 'สำคัญ', price: '' }]);
     const [date, setDate] = useState('');
 
@@ -17,6 +17,13 @@ const Expense = () => {
     const addRecord = () => {
         setRecords([...records, { detail: '', category: 'สำคัญ', price: '' }])
     }
+
+    // Set default date
+    useEffect(() => {
+        const today = new Date();
+        const formattedDate = today.toISOString().split('T')[0];
+        setDate(formattedDate);
+    }, []);
 
     const handleChange = (index, field, value) => {
         const newRecords = [...records];
@@ -75,7 +82,8 @@ const Expense = () => {
                     <div className='flex gap-2 px-2 py-2'>
                         <span>วัน/เดือน/ปี</span>
                         <span>
-                            <input type="date" className='px-2 rounded-md' onChange={(e) => setDate(e.target.value)}/>
+                            <input type="date" className='px-2 rounded-md shadow-md shadow-pink-700'
+                                value={date} onChange={(e) => setDate(e.target.value)}/>
                         </span>
                     </div>
                     {/* Detail record component */}
@@ -110,7 +118,7 @@ const Expense = () => {
 
                 {/* Expense History */}
                 <div className='w-full h-auto mx-2 my-3 bg-pink-200 border-white border-2 rounded-lg'>
-                    <ExpenseHistory />
+                    <ExpenseHistory expenses={expenses} />
                 </div>
             </div>
             

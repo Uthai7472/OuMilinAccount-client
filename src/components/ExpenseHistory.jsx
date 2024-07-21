@@ -17,9 +17,8 @@ const convertToThaiDate = (dateString) => {
     return `${day} ${thaiMonths[month]} ${year}`;
 }
 
-const ExpenseHistory = () => {
+const ExpenseHistory = ({ expenses }) => {
     const token = localStorage.getItem('token');
-    const [expenses, setExpenses] = useState([]);
     const [selectedMonth, setSelectedMonth] = useState('');
     const [selectedCategory, setSelectedCategory] = useState('');
     const [filteredExpenses, setFilteredExpenses] = useState([]);
@@ -35,34 +34,25 @@ const ExpenseHistory = () => {
     ]
 
     useEffect(() => {
-        axios.get('https://oumilin-account-server.onrender.com/api/expense/show', {
-            headers: {
-                'Authorization': `Bearer ${token}`
+        if (Array.isArray(expenses)) {
+            let filtered = expenses;
+
+            if (selectedMonth !== '') {
+                filtered = filtered.filter(expense => {
+                    const expenseDate = new Date(expense.date);
+                    return expenseDate.getMonth() + 1 === parseInt(selectedMonth);
+                });
             }
-        }).then(response => {
-            setExpenses(response.data.expenses);
-        })
-        .catch(error => {
-            console.error('Error fetching expenses:', error);
-        });
-    }, [token]);
 
-    useEffect(() => {
-        let filtered = expenses;
+            if (selectedCategory !== '') {
+                filtered = filtered.filter(expense => expense.category === selectedCategory);
+            }
 
-        if (selectedMonth !== '') {
-            filtered = filtered.filter(expense => {
-                const expenseDate = new Date(expense.date);
-                return expenseDate.getMonth() + 1 === parseInt(selectedMonth);
-            });
+            filtered.sort((a, b) => new Date(b.date) - new Date(a.date));
+            setFilteredExpenses(filtered);
+        } else {
+            console.error('Expenses data is not an array:', expenses);
         }
-
-        if (selectedCategory !== '') {
-            filtered = filtered.filter(expense => expense.category === selectedCategory);
-        }
-
-        filtered.sort((a, b) => new Date(b.date) - new Date(a.date));
-        setFilteredExpenses(filtered);
     }, [selectedMonth, selectedCategory, expenses]);
 
     const handleMonthChange = (e) => {
@@ -95,7 +85,7 @@ const ExpenseHistory = () => {
                 <div className='flex justify-start items-center px-2 py-2 bg-pink-400 rounded-t-lg text-white font-bold'>
                     ประวัติการใช้จ่าย
                 </div>
-                <div className='flex justify-start items-center px-2 gap-2'>
+                <div className='flex justify-start items-center px-2 gap-2 bg-pink-300 mx-1 my-1 rounded-md shadow-xl'>
                     <div>
                         รายจ่ายของเดือน
                     </div>
@@ -104,7 +94,7 @@ const ExpenseHistory = () => {
                         <select
                             name="month"
                             id="month"
-                            className='rounded-md px-1 w-auto'
+                            className='rounded-md px-1 w-auto shadow-md shadow-pink-700'
                             value={selectedMonth}
                             onChange={handleMonthChange}
                         >
@@ -121,7 +111,7 @@ const ExpenseHistory = () => {
                         <select
                             name="category"
                             id="category"
-                            className='rounded-md px-1 w-auto'
+                            className='rounded-md px-1 w-auto shadow-md shadow-pink-700'
                             value={selectedCategory}
                             onChange={handleCategoryChange}
                         >
@@ -134,7 +124,7 @@ const ExpenseHistory = () => {
 
                 <div className='w-full px-2 py-2'>
                     <table className='w-full'>
-                        <thead className='w-full'>
+                        <thead className='w-full border-white border-y-2'>
                             <tr className='flex w-full justify-around'>
                                 <th>รายการ</th>
                                 <th>หมวดหมู่</th>
