@@ -16,7 +16,7 @@ const Login = () => {
         console.log(`username: ${username} password: ${password}`);
 
         try {
-            const response = await axios.post('http://localhost:3000/api/auth/login', {username, password});
+            const response = await axios.post('https://oumilin-account-server.onrender.com/api/auth/login', {username, password});
             console.log(response.data.message);
             
             // Check if the response is successful and contains the token
