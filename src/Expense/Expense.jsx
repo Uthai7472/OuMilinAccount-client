@@ -27,7 +27,10 @@ const Expense = () => {
     const handleRecord = async () => {
         console.log('Records: ', records);
 
-        const expenses = records.map(record => ({
+        // Filter out incomplete records
+        const filteredRecords = records.filter(record => record.detail !== '' && record.category !== '' && record.price !== '')
+
+        const expenses = filteredRecords.map(record => ({
             date: date,
             detail: record.detail,
             category: record.category,

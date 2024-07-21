@@ -21,12 +21,18 @@ const ExpenseHistory = () => {
     const token = localStorage.getItem('token');
     const [expenses, setExpenses] = useState([]);
     const [selectedMonth, setSelectedMonth] = useState('');
+    const [selectedCategory, setSelectedCategory] = useState('');
     const [filteredExpenses, setFilteredExpenses] = useState([]);
 
     const months = [
         '', 'มกราคม', 'กุมภาพันธ์', 'มีนาคม', 'เมษายน', 'พฤษภาคม', 'มิถุนายน',
         'กรกฎาคม', 'สิงหาคม', 'กันยายน', 'ตุลาคม', 'พฤศจิกายน', 'ธันวาคม'
     ];
+
+    const categories = [
+        '', 'สำคัญ', 'ทำกินเอง', 'กินนอกบ้าน', 'ดีต่อใจ', 'กินเล่น',
+        'ซื้อของเข้าบ้าน', 'ใส่ใจ', 'รถ', 'น้ำดื่ม', 'สุขภาพ', 'อู๋', 'มิลืน', 'อื่นๆ'
+    ]
 
     useEffect(() => {
         axios.get('https://oumilin-account-server.onrender.com/api/expense/show', {
@@ -43,19 +49,29 @@ const ExpenseHistory = () => {
 
     useEffect(() => {
         let filtered = expenses;
+
         if (selectedMonth !== '') {
-            filtered = expenses.filter(expense => {
+            filtered = filtered.filter(expense => {
                 const expenseDate = new Date(expense.date);
                 return expenseDate.getMonth() + 1 === parseInt(selectedMonth);
             });
         }
+
+        if (selectedCategory !== '') {
+            filtered = filtered.filter(expense => expense.category === selectedCategory);
+        }
+
         filtered.sort((a, b) => new Date(b.date) - new Date(a.date));
         setFilteredExpenses(filtered);
-    }, [selectedMonth, expenses]);
+    }, [selectedMonth, selectedCategory, expenses]);
 
     const handleMonthChange = (e) => {
         setSelectedMonth(e.target.value);
     };
+
+    const handleCategoryChange = (e) => {
+        setSelectedCategory(e.target.value);
+    }
 
     const groupedExpenses = filteredExpenses.reduce((acc, expense) => {
         const date = expense.date.split('T')[0];
@@ -75,14 +91,15 @@ const ExpenseHistory = () => {
 
     return (
         <div>
-            <div className='text-pink-700'>
-                <div className='flex justify-start items-center px-2 py-2 bg-pink-300 rounded-t-lg text-white font-bold'>
+            <div className='text-pink-700 shadow-lg'>
+                <div className='flex justify-start items-center px-2 py-2 bg-pink-400 rounded-t-lg text-white font-bold'>
                     ประวัติการใช้จ่าย
                 </div>
                 <div className='flex justify-start items-center px-2 gap-2'>
                     <div>
                         รายจ่ายของเดือน
                     </div>
+                    {/* Filter month */}
                     <div className='py-2 flex'>
                         <select
                             name="month"
@@ -92,7 +109,24 @@ const ExpenseHistory = () => {
                             onChange={handleMonthChange}
                         >
                             {months.map((month, index) => (
-                                <option key={index} value={index}>{month}</option>
+                                <option key={index} value={index === 0 ? '' : index}>{month}</option>
+                            ))}
+                        </select>
+                    </div>
+                    {/* Filter category */}
+                    <div className='py-2 flex'>
+                        <div className='px-2'>
+                            หมวดหมู่
+                        </div>
+                        <select
+                            name="category"
+                            id="category"
+                            className='rounded-md px-1 w-auto'
+                            value={selectedCategory}
+                            onChange={handleCategoryChange}
+                        >
+                            {categories.map((category, index) => (
+                                <option key={index} value={category === '' ? '' : category}>{category}</option>
                             ))}
                         </select>
                     </div>
@@ -118,7 +152,7 @@ const ExpenseHistory = () => {
                             {Object.keys(groupedExpenses).map((date, index) => (
                                 <React.Fragment key={index}>
                                     <tr className='flex'>
-                                        <td className='w-full flex justify-center items-center text-white font-bold bg-pink-400'>{convertToThaiDate(date)}</td>
+                                        <td className='w-full flex justify-center items-center font-bold bg-pink-300'>{convertToThaiDate(date)}</td>
                                     </tr>
                                     {groupedExpenses[date].map((expense, idx) => (
                                         <tr key={idx} className='flex w-full justify-between border-pink-700 border-t-[0.5px]'>
