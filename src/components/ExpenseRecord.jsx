@@ -34,6 +34,18 @@ const ExpenseRecord = ({ index, record, handleChange }) => {
                 </div>
             </div>
 
+            <div className='flex flex-col justify-center items-center w-1/5'>
+                <div className='text-[13px] font-bold pb-2'>
+                    ราคา
+                </div>
+                <div>
+                    <input type="number" className='rounded-md w-full px-1 shadow-md shadow-pink-700' required
+                        onChange={(e) => handleChange(index, 'price', e.target.value)}
+                        value={record.price}
+                    />
+                </div>
+            </div>
+
             <div className='flex flex-col justify-center items-center'>
                 <div className='text-[13px] font-bold pb-2'>
                     หมวดหมู่
@@ -50,17 +62,6 @@ const ExpenseRecord = ({ index, record, handleChange }) => {
                 </div> 
             </div>
 
-            <div className='flex flex-col justify-center items-center'>
-                <div className='text-[13px] font-bold pb-2'>
-                    ราคา
-                </div>
-                <div>
-                    <input type="number" className='rounded-md w-full px-1 shadow-md shadow-pink-700' required
-                        onChange={(e) => handleChange(index, 'price', e.target.value)}
-                        value={record.price}
-                    />
-                </div>
-            </div>
         </div>
     </div>
   )

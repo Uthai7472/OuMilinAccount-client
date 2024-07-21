@@ -45,7 +45,7 @@ const ExpenseHistory = ({ expenses }) => {
             }
 
             if (selectedCategory !== '') {
-                filtered = filtered.filter(expense => expense.category === selectedCategory);
+                filtered = filtered .filter(expense => expense.category === selectedCategory);
             }
 
             filtered.sort((a, b) => new Date(b.date) - new Date(a.date));
@@ -127,15 +127,15 @@ const ExpenseHistory = ({ expenses }) => {
                         <thead className='w-full border-white border-y-2'>
                             <tr className='flex w-full justify-around'>
                                 <th>รายการ</th>
-                                <th>หมวดหมู่</th>
                                 <th>ราคา</th>
+                                <th>หมวดหมู่</th>
                             </tr>
                         </thead>
                         <thead className='w-full'>
                             <tr className='flex w-full justify-around'>
                                 <th className='w-1/3 px-2 flex justify-center'>รวม</th>
-                                <th className='w-1/3 px-2 flex justify-center'></th>
                                 <th className='w-1/3 px-2 flex justify-center'>{totalPrice}</th>
+                                <th className='w-1/3 px-2 flex justify-center'></th>
                             </tr>
                         </thead>
                         <tbody className='w-full'>
@@ -147,8 +147,9 @@ const ExpenseHistory = ({ expenses }) => {
                                     {groupedExpenses[date].map((expense, idx) => (
                                         <tr key={idx} className='flex w-full justify-between border-pink-700 border-t-[0.5px]'>
                                             <td className='w-1/3 px-2 flex justify-center'>{expense.detail}</td>
-                                            <td className='w-1/3 px-2 flex justify-center'>{expense.category}</td>
                                             <td className='w-1/3 px-2 flex justify-center'>{expense.price}</td>
+                                            <td className='w-1/3 px-2 flex justify-center'>{expense.category}</td>
+                                            
                                         </tr>
                                     ))}
                                 </React.Fragment>
