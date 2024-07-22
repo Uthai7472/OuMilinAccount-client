@@ -47,7 +47,7 @@ const Expense = ({ expenses }) => {
         console.log('Expenses: ', expenses);
 
         try {
-            const response = await axios.post('http://localhost:3000/api/expense/record', { expenses }, {
+            const response = await axios.post('https://oumilin-account-server.onrender.com/api/expense/record', { expenses }, {
                 headers: {
                     'Authorization': `Bearer ${token}`
                 }

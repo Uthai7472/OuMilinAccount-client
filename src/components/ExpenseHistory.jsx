@@ -89,7 +89,7 @@ const ExpenseHistory = ({ expenses }) => {
     const handleDelete = async (id) => {
         console.log(id);
         try {
-            const response = await axios.delete(`http://localhost:3000/api/expense/expense/${id}`, {
+            const response = await axios.delete(`https://oumilin-account-server.onrender.com/api/expense/expense/${id}`, {
                 headers: {
                     'Authorization': `Bearer ${token}`
                 }
