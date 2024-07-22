@@ -75,7 +75,7 @@ const Expense = ({ expenses }) => {
                 {/* Record expense content */}
                 <div className='block w-full h-auto bg-pink-200 text-pink-600 border-white border-2 rounded-[10px] pb-2'>
                     {/* Record topic */}
-                    <div className='font-bold bg-pink-400 text-white rounded-t-[10px] px-2 py-1'>
+                    <div className='flex justify-center font-bold bg-pink-700 text-white rounded-t-[10px] px-2 py-2'>
                         บันทึกรายจ่าย
                     </div>
                     {/* Date input */}
@@ -117,6 +117,9 @@ const Expense = ({ expenses }) => {
                 </div>
 
                 {/* Expense History */}
+                <div>
+                    💝💝💝💝💝💝💝💝💝💝💝💝💝
+                </div>
                 <div className='w-full h-auto mx-2 my-3 bg-pink-200 border-white border-2 rounded-lg'>
                     <ExpenseHistory expenses={expenses} />
                 </div>

@@ -36,6 +36,8 @@ const NavSideBar = () => {
     const [isDropdown, setIsDropdown] = useState(false);
     const [isDropdownProfile, setIsDropdownProfile] = useState(false);
 
+    const navbarHeight = '2.8rem';
+
     const handleLogout = (e) => {
         e.preventDefault();
 
@@ -83,7 +85,7 @@ const NavSideBar = () => {
         {/* ----------------------------------------------------- */}
 
         {/* Navbar */} 
-        <div className='md:hidden flex justify-between w-full h-[100%] bg-pink-600 text-white'>
+        <div className='md:hidden fixed flex justify-between w-full h-auto bg-pink-600 text-white' style={{ height: navbarHeight }}>
             {/* Navbar Topic */}
             <div className='w-full h-full flex items-center text-white text-xl font-bold py-3 px-3 hover:cursor-pointer' onClick={handleDropdownProfile}>
                 OuMilin บัญชีรายรับ-รายจ่าย
@@ -99,7 +101,7 @@ const NavSideBar = () => {
         {/* Dropdown Profile */}
         {isDropdownProfile ? (
             <div className='w-full'>
-                <ul className='flex flex-col justify-center items-center w-full bg-pink-500 text-md text-white font-bold            '>
+                <ul className='flex flex-col justify-center items-center w-full bg-pink-500 text-md text-white font-bold' >
                     <li className='w-full hover:cursor-pointer hover:bg-pink-400'>
                         <button className='w-full py-2' onClick={handleLogout}>ลงชื่อออก</button>
                     </li>
@@ -109,7 +111,7 @@ const NavSideBar = () => {
 
         {/* Dropdwn Menu */}
         {isDropdown ? (
-            <div className={`md:hidden flex justify-center text-white bg-pink-500`} >
+            <div className={`md:hidden fixed flex justify-center w-full text-white bg-pink-500`} style={{ marginTop: navbarHeight }}>
                 <Menu />
             </div>
         ) : null}

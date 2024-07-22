@@ -32,7 +32,7 @@ const ExpenseHistory = ({ expenses }) => {
 
     const categories = [
         '', 'สำคัญ', 'ทำกินเอง', 'กินนอกบ้าน', 'ดีต่อใจ', 'กินเล่น',
-        'ซื้อของเข้าบ้าน', 'ใส่ใจ', 'รถ', 'น้ำดื่ม', 'สุขภาพ', 'อู๋', 'มิลืน', 'อื่นๆ'
+        'ซื้อของเข้าบ้าน', 'ใส่ใจ', 'รถ', 'น้ำดื่ม', 'สุขภาพ', 'อู๋👨‍💻', 'มิลิน👸', 'อื่นๆ'
     ]
 
     useEffect(() => {
@@ -107,7 +107,7 @@ const ExpenseHistory = ({ expenses }) => {
     return (
         <div>
             <div className='text-pink-700 shadow-lg'>
-                <div className='flex justify-start items-center px-2 py-2 bg-pink-400 rounded-t-lg text-white font-bold'>
+                <div className='flex justify-center items-center px-2 py-2 bg-pink-600 rounded-t-lg text-white font-bold'>
                     ประวัติการใช้จ่าย
                 </div>
                 <div className='flex justify-start items-center px-2 gap-2 bg-pink-300 mx-1 my-1 rounded-md shadow-xl'>
@@ -167,7 +167,7 @@ const ExpenseHistory = ({ expenses }) => {
                             {Object.keys(groupedExpenses).map((date, dateIndex) => (
                                 <React.Fragment key={dateIndex}>
                                     <tr className='flex'>
-                                        <td className='w-full flex justify-center items-center font-bold bg-pink-300'>{convertToThaiDate(date)}</td>
+                                        <td className='w-full flex justify-center items-center font-bold text-[20px] border-2 border-pink-700 bg-pink-300'>❤️{convertToThaiDate(date)}❤️</td>
                                     </tr>
                                     {groupedExpenses[date].map((expense, expenseIndex) => (
                                         <React.Fragment key={expense.id}>
