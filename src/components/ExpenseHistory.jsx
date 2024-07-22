@@ -2,7 +2,7 @@ import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import NavSideBar from '../components/NavSideBar';
 import moment from 'moment-timezone';
-import { FaWindowClose } from 'react-icons/fa';
+import { FaWindowClose, FaDollarSign } from 'react-icons/fa';
 
 const convertToThaiDate = (dateString) => {
     const thaiMonths = [
@@ -89,7 +89,7 @@ const ExpenseHistory = ({ expenses }) => {
     const handleDelete = async (id) => {
         console.log(id);
         try {
-            const response = await axios.delete(`https://oumilin-account-server.onrender.com/api/expense/expense/${id}`, {
+            const response = await axios.delete(`http://localhost:3000/api/expense/expense/${id}`, {
                 headers: {
                     'Authorization': `Bearer ${token}`
                 }
@@ -163,7 +163,7 @@ const ExpenseHistory = ({ expenses }) => {
                                 <th className='w-1/3 px-2 flex justify-center'></th>
                             </tr>
                         </thead>
-                        <tbody className='w-full'>
+                        <tbody className='w-full break-words'>
                             {Object.keys(groupedExpenses).map((date, dateIndex) => (
                                 <React.Fragment key={dateIndex}>
                                     <tr className='flex'>
@@ -171,37 +171,30 @@ const ExpenseHistory = ({ expenses }) => {
                                     </tr>
                                     {groupedExpenses[date].map((expense, expenseIndex) => (
                                         <React.Fragment key={expense.id}>
-                                            <tr 
-                                                className='flex w-full justify-between border-pink-700 border-t-[0.5px]'
+                                            <div 
+                                                className='flex flex-col w-full justify-start items-start gap-3 py-2 rounded-xl border-white border-[4px] bg-pink-300 my-2 animated-border shadow-xl'
                                                 onClick={() => toggleDropdown(expense.id)}
                                             >
-                                                <td className='w-1/3 px-2 flex justify-center'>{expense.detail}</td>
-                                                <td className='w-1/3 px-2 flex justify-center'>{expense.price}</td>
-                                                <td className='w-1/3 px-2 flex justify-center'>{expense.category}</td>
+                                                <span className='w-auto mx-2 px-2 py-1 flex justify-start items-center bg-pink-600 rounded-lg text-white font-bold'>{expense.category}</span>
+                                                <span className='w-[15rem] break-words px-2'>{expense.detail}</span>
+                                                <span className='w-full px-2 text-[18px] font-bold flex justify-start'><FaDollarSign size={20}/>{expense.price} บาท</span>
                                                 
-                                            </tr>
-
-                                            {dropdownIdx === expense.id && (
-                                                <tr>
-                                                    <td colSpan={3} className='flex justify-end items-center gap-3'>
-                                                        {/* <div className='bg-blue-500 text-white px-3 border-white border-2 rounded-md'
-                                                            
-                                                        >
-                                                            <button>
-                                                                Edit
-                                                            </button>
-                                                        </div> */}
+                                                {dropdownIdx === expense.id && (
+                                                    <div className='w-full'>
                                                         <div 
-                                                            className=''
+                                                            className='w-full'
                                                             onClick={() => handleDelete(expense.id)}
                                                         >
-                                                            <button className='w-full flex text-pink-700'>
+                                                            <button className='w-full px-2 flex justify-end break-words text-pink-700'>
                                                                 <FaWindowClose size={22} />
                                                             </button>
                                                         </div>
-                                                    </td>
-                                                </tr>
-                                            )}
+                                                    </div>
+                                                )}
+                                                
+                                            </div>
+
+                                            
                                     </React.Fragment>
                                     ))}
                                 </React.Fragment>

@@ -14,7 +14,7 @@ const App = () => {
   // Fetch expenses from API
   useEffect(() => {
     if (token) {
-      axios.get('https://oumilin-account-server.onrender.com/api/expense/show', {
+      axios.get('http://localhost:3000/api/expense/show', {
         headers: {
           'Authorization': `Bearer ${token}`
         }

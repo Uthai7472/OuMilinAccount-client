@@ -25,7 +25,9 @@ const ExpenseRecord = ({ index, record, handleChange }) => {
                     รายการ
                 </div>
                 <div >
-                    <textarea name="" id="" className='rounded-lg w-full px-1 shadow-md shadow-pink-700' required
+                    <textarea  className='rounded-lg w-full px-1 shadow-md shadow-pink-700' required
+                        rows="3"
+                        cols="10"
                         onChange={(e) => handleChange(index, 'detail', e.target.value)}
                         value={record.detail}
                     >
