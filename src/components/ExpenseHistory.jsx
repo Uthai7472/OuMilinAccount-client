@@ -2,7 +2,7 @@ import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import NavSideBar from '../components/NavSideBar';
 import moment from 'moment-timezone';
-import { FaWindowClose, FaDollarSign } from 'react-icons/fa';
+import { FaWindowClose } from 'react-icons/fa';
 
 const convertToThaiDate = (dateString) => {
     const thaiMonths = [
@@ -32,7 +32,7 @@ const ExpenseHistory = ({ expenses }) => {
 
     const categories = [
         '', 'สำคัญ', 'ทำกินเอง', 'กินนอกบ้าน', 'ดีต่อใจ', 'กินเล่น',
-        'ซื้อของเข้าบ้าน', 'ใส่ใจ', 'รถ', 'น้ำดื่ม', 'สุขภาพ', 'อู๋👨‍💻', 'มิลิน👸', 'อื่นๆ'
+        'ซื้อของเข้าบ้าน', 'ใส่ใจ', 'รถ', 'น้ำดื่ม', 'สุขภาพ', 'อู๋👨‍💻', 'มิลิน🐷', 'อื่นๆ'
     ]
 
     useEffect(() => {
@@ -167,7 +167,7 @@ const ExpenseHistory = ({ expenses }) => {
                             {Object.keys(groupedExpenses).map((date, dateIndex) => (
                                 <React.Fragment key={dateIndex}>
                                     <tr className='flex'>
-                                        <td className='w-full flex justify-center items-center font-bold text-[20px] border-2 border-pink-700 bg-pink-300'>❤️{convertToThaiDate(date)}❤️</td>
+                                        <td className='w-full flex justify-center items-center font-bold text-[20px] border-2 border-pink-700 bg-pink-300'>🗓️ {convertToThaiDate(date)}</td>
                                     </tr>
                                     {groupedExpenses[date].map((expense, expenseIndex) => (
                                         <React.Fragment key={expense.id}>
@@ -177,7 +177,7 @@ const ExpenseHistory = ({ expenses }) => {
                                             >
                                                 <span className='w-auto mx-2 px-2 py-1 flex justify-start items-center bg-pink-600 rounded-lg text-white font-bold'>{expense.category}</span>
                                                 <span className='w-[15rem] break-words px-2'>{expense.detail}</span>
-                                                <span className='w-full px-2 text-[18px] font-bold flex justify-start'><FaDollarSign size={20}/>{expense.price} บาท</span>
+                                                <span className='w-full px-2 text-[18px] font-bold flex justify-start'>💰{expense.price} บาท</span>
                                                 
                                                 {dropdownIdx === expense.id && (
                                                     <div className='w-full'>
