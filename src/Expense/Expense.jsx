@@ -117,9 +117,7 @@ const Expense = ({ expenses }) => {
                 </div>
 
                 {/* Expense History */}
-                <div>
-                    💝💝💝💝💝💝💝💝💝💝💝💝💝
-                </div>
+
                 <div className='w-full h-auto mx-2 my-3 bg-pink-200 border-white border-2 rounded-lg'>
                     <ExpenseHistory expenses={expenses} />
                 </div>
