@@ -68,7 +68,7 @@ const Expense = ({ expenses }) => {
             {/* Expense Content */}
             <div className='flex flex-1 flex-col justify-start items-center px-2 bg-pink-300'>
                 {/* Topic */}
-                <div className='flex justify-start items-start text-xl font-bold py-2 text-pink-600'>
+                <div className='flex justify-start items-start text-xl font-bold py-2 text-pink-600 mt-[2.5rem] md:mt-0'>
                     รายจ่าย
                 </div>
 

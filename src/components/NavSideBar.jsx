@@ -101,8 +101,8 @@ const NavSideBar = () => {
         {/* Dropdown Profile */}
         {isDropdownProfile ? (
             <div className='w-full'>
-                <ul className='flex flex-col justify-center items-center w-full bg-pink-500 text-md text-white font-bold' >
-                    <li className='w-full hover:cursor-pointer hover:bg-pink-400'>
+                <ul className='fixed flex justify-start items-end mt-[2.5rem] w-full h-[2.5rem] bg-pink-500 text-md text-white font-bold' >
+                    <li className='w-full hover:cursor-pointer hover:bg-pink-400 ' style={{ marginTop: navbarHeight }}>
                         <button className='w-full py-2' onClick={handleLogout}>ลงชื่อออก</button>
                     </li>
                 </ul>
