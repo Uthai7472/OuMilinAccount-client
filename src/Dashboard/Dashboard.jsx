@@ -25,6 +25,17 @@ const Dashboard = ({ expenses, loading }) => {
     const [selectedMonth, setSelectedMonth] = useState(new Date().getMonth()); // Default to current month
     const [selectedYear, setSelectedYear] = useState(new Date().getFullYear()); // Default to current year
 
+    const [localLoading, setLocalLoading] = useState(loading);
+    useEffect(() => {
+        if (!loading) {
+            setLocalLoading(true);
+            // Simulate a delay to show the loading state when navigating
+            setTimeout(() => {
+                setLocalLoading(false);
+            }, 2000);
+        }
+    }, [loading]);
+
     const handleMonthChange = (event) => {
         setSelectedMonth(parseInt(event.target.value));
         console.log(selectedMonth);
@@ -90,6 +101,14 @@ const Dashboard = ({ expenses, loading }) => {
 
         calculateExpenses();
     }, [expenses, selectedMonth, selectedYear]);
+
+    if (localLoading) {
+        return (
+            <div className="flex justify-center items-center min-h-screen bg-pink-300 text-white">
+                กำลังโหลด...
+            </div>
+        );
+    }
 
   return (
     <div>
