@@ -112,7 +112,7 @@ const Expense = ({ expenses, loading }) => {
                             
                             {/* Record button */}
                             <div className='w-full flex justify-center items-center'>
-                                <button className='bg-pink-600 text-pink-200 w-full mx-2 py-2 rounded-lg hover:bg-pink-300
+                                <button className='bg-pink-600 text-pink-200 w-full mx-2 py-10 rounded-lg hover:bg-pink-300
                                     hover:text-pink-700
                                 '
                                     onClick={handleRecord}
