@@ -9,21 +9,28 @@ import axios from 'axios';
 
 const App = () => {
   const [expenses, setExpenses] = useState([]);
+  const [loading, setLoading] = useState(true);
+
   const token = localStorage.getItem('token');
 
   // Fetch expenses from API
   useEffect(() => {
     if (token) {
+      setLoading(true);
       axios.get('https://oumilin-account-server.onrender.com/api/expense/show', {
         headers: {
           'Authorization': `Bearer ${token}`
         }
       }).then(response => {
         setExpenses(response.data.expenses);
+        setLoading(false);
       })
       .catch(error => {
         console.error('Error fetching expenses:', error);
+        setLoading(false);
       });
+    } else {
+      setLoading(false);
     }
   }, [token]);
 
@@ -32,8 +39,8 @@ const App = () => {
       <Routes>
         <Route path='/' element={<Login />} />
         <Route path='/register' element={<Register />} />
-        <Route path='/dashboard' element={<ProtectedRoute element={<Dashboard expenses={expenses} />} />} />
-        <Route path='/expense' element={<ProtectedRoute element={<Expense expenses={expenses} />} />} />
+        <Route path='/dashboard' element={<ProtectedRoute element={<Dashboard expenses={expenses} loading={loading} />} />} />
+        <Route path='/expense' element={<ProtectedRoute element={<Expense expenses={expenses} loading={loading} />} />} />
       </Routes>
     </Router>
   )

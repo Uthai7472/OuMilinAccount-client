@@ -7,7 +7,7 @@ import { Chart as ChartJS, Title, Tooltip, Legend, BarElement, CategoryScale, Li
 // Register ChartJS components
 ChartJS.register(Title, Tooltip, Legend, BarElement, CategoryScale, LinearScale);
 
-const Dashboard = ({ expenses }) => {
+const Dashboard = ({ expenses, loading }) => {
     const [expenseThisMonth, setExpenseThisMonth] = useState(0);
     const [expenseAll, setExpenseAll] = useState(0);
     const [chartData, setChartData] = useState({
@@ -24,7 +24,6 @@ const Dashboard = ({ expenses }) => {
     });
     const [selectedMonth, setSelectedMonth] = useState(new Date().getMonth()); // Default to current month
     const [selectedYear, setSelectedYear] = useState(new Date().getFullYear()); // Default to current year
-    const [loading, setLoading] = useState(true);
 
     const handleMonthChange = (event) => {
         setSelectedMonth(parseInt(event.target.value));
@@ -36,7 +35,6 @@ const Dashboard = ({ expenses }) => {
     };
 
     useEffect(() => {
-        if (!expenses) return;
 
         const calculateExpenses = () => {
             const today = new Date();
@@ -87,9 +85,7 @@ const Dashboard = ({ expenses }) => {
                         borderWidth: 1
                     }
                 ]
-            });
-
-            setLoading(false); // Data is loaded
+            });// Data is loaded
         };
 
         calculateExpenses();
