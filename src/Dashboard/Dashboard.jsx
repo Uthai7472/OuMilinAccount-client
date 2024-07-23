@@ -105,7 +105,7 @@ const Dashboard = ({ expenses, loading }) => {
 
                 {/* Show loading message if data is still being fetched */}
                 {loading ? (
-                    <div className='flex justify-center items-center py-3 text-white'>
+                    <div className='flex justify-center items-center py-10 text-white'>
                         กำลังโหลด...
                     </div>
                 ) : (
