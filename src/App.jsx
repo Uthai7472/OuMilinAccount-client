@@ -32,7 +32,7 @@ const App = () => {
     } else {
       setLoading(false);
     }
-  }, [token]);
+  }, []);
 
   return (
     <Router>
