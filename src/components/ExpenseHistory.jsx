@@ -120,8 +120,8 @@ const ExpenseHistory = ({ expenses }) => {
                     ประวัติการใช้จ่าย
                 </div>
                 <div className='flex flex-col bg-pink-300 mx-1 my-1 rounded-md shadow-xl'>
-                    <div className='flex justify-start items-center gap-2'>
-                        <div className='px-2'>
+                    <div className='flex justify-start items-center px-2'>
+                        <div className=''>
                             ค้นหาเดือน
                         </div>
                         {/* Filter month */}
@@ -158,8 +158,8 @@ const ExpenseHistory = ({ expenses }) => {
                     </div>
 
                     {/* Search detail */}
-                    <div className='py-4 flex'>
-                        <div className='px-2'>
+                    <div className='py-4 px-2 flex justify-start items-center gap-2'>
+                        <div className=''>
                             ค้นหารายการ
                         </div>
                         <input
