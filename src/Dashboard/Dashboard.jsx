@@ -32,7 +32,7 @@ const Dashboard = ({ expenses, loading }) => {
             // Simulate a delay to show the loading state when navigating
             setTimeout(() => {
                 setLocalLoading(false);
-            }, 2000);
+            }, 500);
         }
     }, [loading]);
 

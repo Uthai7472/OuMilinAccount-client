@@ -24,6 +24,7 @@ const ExpenseHistory = ({ expenses }) => {
     const [selectedCategory, setSelectedCategory] = useState('');
     const [filteredExpenses, setFilteredExpenses] = useState([]);
     const [dropdownIdx, setDropdownIdx] = useState(null);
+    const [searchQuery, setSearchQuery] = useState('');
 
     const months = [
         '', 'มกราคม', 'กุมภาพันธ์', 'มีนาคม', 'เมษายน', 'พฤษภาคม', 'มิถุนายน',
@@ -50,12 +51,16 @@ const ExpenseHistory = ({ expenses }) => {
                 filtered = filtered .filter(expense => expense.category === selectedCategory);
             }
 
+            if (searchQuery !== '') {
+                filtered = filtered.filter(expense => expense.detail.toLowerCase().includes(searchQuery.toLowerCase()));
+            }
+
             filtered.sort((a, b) => new Date(b.date) - new Date(a.date));
             setFilteredExpenses(filtered);
         } else {
             console.error('Expenses data is not an array:', expenses);
         }
-    }, [selectedMonth, selectedCategory, expenses]);
+    }, [selectedMonth, selectedCategory, searchQuery, expenses]);
 
     const handleMonthChange = (e) => {
         setSelectedMonth(e.target.value);
@@ -63,6 +68,10 @@ const ExpenseHistory = ({ expenses }) => {
 
     const handleCategoryChange = (e) => {
         setSelectedCategory(e.target.value);
+    }
+
+    const handleSearchChange = (e) => {
+        setSearchQuery(e.target.value);
     }
 
     const toggleDropdown = (uniqueId) => {
@@ -110,40 +119,55 @@ const ExpenseHistory = ({ expenses }) => {
                 <div className='flex justify-center items-center px-2 py-2 bg-pink-600 rounded-t-lg text-white font-bold'>
                     ประวัติการใช้จ่าย
                 </div>
-                <div className='flex justify-start items-center px-2 gap-2 bg-pink-300 mx-1 my-1 rounded-md shadow-xl'>
-                    <div>
-                        รายจ่ายของเดือน
-                    </div>
-                    {/* Filter month */}
-                    <div className='py-2 flex'>
-                        <select
-                            name="month"
-                            id="month"
-                            className='rounded-md px-1 w-auto shadow-md shadow-pink-700'
-                            value={selectedMonth}
-                            onChange={handleMonthChange}
-                        >
-                            {months.map((month, index) => (
-                                <option key={index} value={index === 0 ? '' : index}>{month}</option>
-                            ))}
-                        </select>
-                    </div>
-                    {/* Filter category */}
-                    <div className='py-2 flex'>
+                <div className='flex flex-col bg-pink-300 mx-1 my-1 rounded-md shadow-xl'>
+                    <div className='flex justify-start items-center gap-2'>
                         <div className='px-2'>
-                            หมวดหมู่
+                            ค้นหาเดือน
                         </div>
-                        <select
-                            name="category"
-                            id="category"
+                        {/* Filter month */}
+                        <div className='py-2 flex'>
+                            <select
+                                name="month"
+                                id="month"
+                                className='rounded-md px-1 w-auto shadow-md shadow-pink-700'
+                                value={selectedMonth}
+                                onChange={handleMonthChange}
+                            >
+                                {months.map((month, index) => (
+                                    <option key={index} value={index === 0 ? '' : index}>{month}</option>
+                                ))}
+                            </select>
+                        </div>
+                        {/* Filter category */}
+                        <div className='py-2 flex'>
+                            <div className='px-2'>
+                                ค้นหาหมวดหมู่
+                            </div>
+                            <select
+                                name="category"
+                                id="category"
+                                className='rounded-md px-1 w-auto shadow-md shadow-pink-700'
+                                value={selectedCategory}
+                                onChange={handleCategoryChange}
+                            >
+                                {categories.map((category, index) => (
+                                    <option key={index} value={category === '' ? '' : category}>{category}</option>
+                                ))}
+                            </select>
+                        </div>
+                    </div>
+
+                    {/* Search detail */}
+                    <div className='py-4 flex'>
+                        <div className='px-2'>
+                            ค้นหารายการ
+                        </div>
+                        <input
+                            type="text"
                             className='rounded-md px-1 w-auto shadow-md shadow-pink-700'
-                            value={selectedCategory}
-                            onChange={handleCategoryChange}
-                        >
-                            {categories.map((category, index) => (
-                                <option key={index} value={category === '' ? '' : category}>{category}</option>
-                            ))}
-                        </select>
+                            value={searchQuery}
+                            onChange={handleSearchChange}
+                        />
                     </div>
                 </div>
 
