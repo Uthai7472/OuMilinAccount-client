@@ -8,6 +8,7 @@ const ExpenseRecord = ({ index, record, handleChange }) => {
         'ดีต่อใจ',
         'กินเล่น',
         'ซื้อของเข้าบ้าน',
+        'ของใช้',
         'ใส่ใจ',
         'รถ',
         'น้ำดื่ม',

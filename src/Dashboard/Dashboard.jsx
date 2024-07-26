@@ -85,12 +85,16 @@ const Dashboard = ({ expenses, loading }) => {
                 return acc;
             }, {});
 
+            // Sort categories and their totals
+            const sortedCategories = Object.keys(categoryTotals).sort((a, b) => categoryTotals[b] - categoryTotals[a]);
+            const sortedTotals = sortedCategories.map(category => categoryTotals[category]);
+
             setChartData({
-                labels: Object.keys(categoryTotals),
+                labels: sortedCategories,
                 datasets: [
                     {
                         label: 'Expenses by Category',
-                        data: Object.values(categoryTotals),
+                        data: sortedTotals,
                         backgroundColor: 'rgba(255, 99, 132, 0.2)',
                         borderColor: 'rgba(255, 99, 132, 1)',
                         borderWidth: 1
@@ -139,14 +143,14 @@ const Dashboard = ({ expenses, loading }) => {
                                     <FaRegCalendarAlt size={40} className='text-black' />{expenseThisMonth} บาท
                                 </div>
                             </div>
-                            <div className='md:w-1/3 w-2/3 h-[7rem] mx-3 my-3 bg-pink-500 rounded-2xl'>
+                            {/* <div className='md:w-1/3 w-2/3 h-[7rem] mx-3 my-3 bg-pink-500 rounded-2xl'>
                                 <div className='text-md text-white flex justify-center items-center py-2 bg-pink-700 rounded-t-2xl'>
                                     รายจ่ายทั้งหมด 
                                 </div>
                                 <div className='text-2xl text-white flex justify-center items-center py-2 gap-4'>
-                                    <FaMoneyBill size={45} className='text-black' />{expenseAll} บาท
+                                    <FaMoneyBill size={45} className='text-black' />
                                 </div>
-                            </div>
+                            </div> */}
                             <div className='md:w-1/3 w-2/3 h-[7rem] mx-3 my-3 bg-pink-500 rounded-2xl'>
                                 {/* Additional Content */}
                             </div>
