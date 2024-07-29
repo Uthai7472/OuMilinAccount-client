@@ -47,7 +47,7 @@ const Expense = ({ expenses, loading }) => {
         console.log('Expenses: ', expenses);
 
         try {
-            const response = await axios.post('https://oumilin-account-server.onrender.com/api/expense/record', { expenses }, {
+            const response = await axios.post('https://ou-milin-account-server.vercel.app/api/expense/record', { expenses }, {
                 headers: {
                     'Authorization': `Bearer ${token}`
                 }

@@ -17,7 +17,7 @@ const App = () => {
   useEffect(() => {
     if (token) {
       setLoading(true);
-      axios.get('https://oumilin-account-server.onrender.com/api/expense/show', {
+      axios.get('https://ou-milin-account-server.vercel.app/api/expense/show', {
         headers: {
           'Authorization': `Bearer ${token}`
         }

@@ -98,7 +98,7 @@ const ExpenseHistory = ({ expenses }) => {
     const handleDelete = async (id) => {
         console.log(id);
         try {
-            const response = await axios.delete(`https://oumilin-account-server.onrender.com/api/expense/expense/${id}`, {
+            const response = await axios.delete(`https://ou-milin-account-server.vercel.app/api/expense/expense/${id}`, {
                 headers: {
                     'Authorization': `Bearer ${token}`
                 }
@@ -125,7 +125,7 @@ const ExpenseHistory = ({ expenses }) => {
                             ค้นหาเดือน
                         </div>
                         {/* Filter month */}
-                        <div className='py-2 flex'>
+                        <div className='px-2 py-2 flex'>
                             <select
                                 name="month"
                                 id="month"
