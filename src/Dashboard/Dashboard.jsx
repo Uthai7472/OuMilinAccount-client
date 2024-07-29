@@ -104,7 +104,7 @@ const Dashboard = ({ expenses, loading }) => {
         };
 
         calculateExpenses();
-    }, [expenses, selectedMonth, selectedYear]);
+    }, [loading, expenses, selectedMonth, selectedYear]);
 
     if (localLoading) {
         return (
